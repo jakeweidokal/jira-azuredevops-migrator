@@ -41,6 +41,7 @@ namespace JiraExport
             CommandOption userOption = commandLineApplication.Option("-u <username>", "Username for authentication", CommandOptionType.SingleValue);
             CommandOption passwordOption = commandLineApplication.Option("-p <password>", "Password for authentication", CommandOptionType.SingleValue);
             CommandOption urlOption = commandLineApplication.Option("--url <accounturl>", "Url for the account", CommandOptionType.SingleValue);
+            CommandOption headerOption = commandLineApplication.Option("--header <requestHeader>", "Header sent on request to JIRA API", CommandOptionType.MultipleValue);
             CommandOption configOption = commandLineApplication.Option("--config <configurationfilename>", "Export the work items based on this configuration file", CommandOptionType.SingleValue);
             CommandOption forceOption = commandLineApplication.Option("--force", "Forces execution from start (instead of continuing from previous run)", CommandOptionType.NoValue);
             CommandOption continueOnCriticalOption = commandLineApplication.Option("--continue", "Continue execution upon a critical error", CommandOptionType.SingleValue);
@@ -51,7 +52,7 @@ namespace JiraExport
 
                 if (configOption.HasValue())
                 {
-                    ExecuteMigration(userOption, passwordOption, urlOption, configOption, forceFresh, continueOnCriticalOption);
+                    ExecuteMigration(userOption, passwordOption, urlOption, headerOption, configOption, forceFresh, continueOnCriticalOption);
                 }
                 else
                 {
@@ -62,7 +63,7 @@ namespace JiraExport
             });
         }
 
-        private void ExecuteMigration(CommandOption user, CommandOption password, CommandOption url, CommandOption configFile, bool forceFresh, CommandOption continueOnCritical)
+        private void ExecuteMigration(CommandOption user, CommandOption password, CommandOption url, CommandOption header, CommandOption configFile, bool forceFresh, CommandOption continueOnCritical)
         {
             var itemsCount = 0;
             var exportedItemsCount = 0;
@@ -83,7 +84,7 @@ namespace JiraExport
 
                 var downloadOptions = (DownloadOptions)config.DownloadOptions;
 
-                var jiraSettings = new JiraSettings(user.Value(), password.Value(), url.Value(), config.SourceProject)
+                var jiraSettings = new JiraSettings(user.Value(), password.Value(), url.Value(), header.Values, config.SourceProject)
                 {
                     BatchSize = config.BatchSize,
                     UserMappingFile = config.UserMappingFile != null ? Path.Combine(migrationWorkspace, config.UserMappingFile) : string.Empty,

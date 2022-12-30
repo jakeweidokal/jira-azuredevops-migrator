@@ -31,7 +31,7 @@ namespace Migration.Jira_Export.Tests.RevisionUtils
             remoteIssue.Add("key", issueKey);
 
             provider.DownloadIssue(default).ReturnsForAnyArgs(remoteIssue);
-            JiraSettings settings = new JiraSettings("userID", "pass", "url", "project");
+            JiraSettings settings = new JiraSettings("userID", "pass", "url", new List<string>() { "key: value" }, "project");
             settings.SprintField = "SprintField";
             provider.GetSettings().ReturnsForAnyArgs(settings);
 

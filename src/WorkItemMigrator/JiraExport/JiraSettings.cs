@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace JiraExport
 {
     public class JiraSettings
@@ -6,6 +8,7 @@ namespace JiraExport
         public string UserID { get; private set; }
         public string Pass { get; private set; }
         public string Url { get; private set; }
+        public List<string> Headers { get; private set; }
         public string Project { get; set; }
         public string EpicLinkField { get; set; }
         public string SprintField { get; set; }
@@ -15,11 +18,12 @@ namespace JiraExport
         public string JQL { get; set; }
         public bool UsingJiraCloud { get; set; }
 
-        public JiraSettings(string userID, string pass, string url, string project)
+        public JiraSettings(string userID, string pass, string url, List<string> headers, string project)
         {
             UserID = userID;
             Pass = pass;
             Url = url;
+            Headers = headers;
             Project = project;
         }
     }

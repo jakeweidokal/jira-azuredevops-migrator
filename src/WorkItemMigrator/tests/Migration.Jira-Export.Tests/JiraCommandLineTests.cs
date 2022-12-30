@@ -43,6 +43,50 @@ namespace Migration.Jira_Export.Tests
                 "XXXXXXXXXXXXXXXXXXXXXXXX",
                 "--url",
                 "https://solidifydemo.atlassian.net",
+                "--header",
+                "key: value",
+                "--config",
+                "C:\\dev\\jira-azuredevops-migrator\\src\\WorkItemMigrator\\Migration.Tests\\test-config-export.json"
+            };
+
+            var sut = new JiraCommandLine(args);
+
+            Assert.That(() => sut.Run(), !Throws.InstanceOf<Exception>());
+        }
+
+        [Test]
+        public void When_calling_execute_with_no_headers_Then_run_is_executed()
+        {
+            string[] args = new string[] {
+                "-u",
+                "alexander.hjelm@solidify.dev",
+                "-p",
+                "XXXXXXXXXXXXXXXXXXXXXXXX",
+                "--url",
+                "https://solidifydemo.atlassian.net",
+                "--config",
+                "C:\\dev\\jira-azuredevops-migrator\\src\\WorkItemMigrator\\Migration.Tests\\test-config-export.json"
+            };
+
+            var sut = new JiraCommandLine(args);
+
+            Assert.That(() => sut.Run(), !Throws.InstanceOf<Exception>());
+        }
+
+        [Test]
+        public void When_calling_execute_with_multiple_headers_Then_run_is_executed()
+        {
+            string[] args = new string[] {
+                "-u",
+                "alexander.hjelm@solidify.dev",
+                "-p",
+                "XXXXXXXXXXXXXXXXXXXXXXXX",
+                "--url",
+                "https://solidifydemo.atlassian.net",
+                "--header",
+                "key: value",
+                "--header",
+                "key2: value2",
                 "--config",
                 "C:\\dev\\jira-azuredevops-migrator\\src\\WorkItemMigrator\\Migration.Tests\\test-config-export.json"
             };

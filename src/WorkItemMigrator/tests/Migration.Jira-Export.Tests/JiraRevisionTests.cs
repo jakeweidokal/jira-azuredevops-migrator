@@ -6,6 +6,7 @@ using AutoFixture;
 using Newtonsoft.Json.Linq;
 using NSubstitute;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 
 namespace Migration.Jira_Export.Tests
 {
@@ -74,7 +75,7 @@ namespace Migration.Jira_Export.Tests
 
         private JiraSettings createJiraSettings()
         {
-            JiraSettings settings = new JiraSettings("userID", "pass", "url", "project");
+            JiraSettings settings = new JiraSettings("userID", "pass", "url", new List<string>() { "key: value" }, "project");
             settings.EpicLinkField = "EpicLinkField";
             settings.SprintField = "SprintField";
 
